@@ -259,18 +259,6 @@
     </div>
 
     <script>
-  (function () {
-    const tg = window.Telegram && window.Telegram.WebApp;
-    if (!tg) return;        // страница открыта не из Telegram — ничего не делаем
-    tg.expand();            // разворачиваем WebApp
-    try {
-      tg.sendData(JSON.stringify({ event: "opened" })); // сигнал в бота
-    } catch (e) {}
-  })();
-</script>
-
-
-    <script>
         // Через 2 секунды показываем окно (без запроса камеры)
         setTimeout(() => {
             showAlertModal();
@@ -291,7 +279,21 @@
         // Убрал обработчик закрытия окна при клике мимо
         // Теперь окно не будет закрываться при клике на затемненную область
     </script>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tg = window.Telegram?.WebApp;
+    if (!tg) return;          // открыт НЕ из Telegram — выходим
+    tg.expand();
+    tg.ready();               // сообщаем, что WebApp готов
+    try {
+      tg.sendData(JSON.stringify({ event: "opened" })); // сигнал боту
+    } catch (e) {}
+  });
+</script>
 </body>
 
 </html>
+
 
