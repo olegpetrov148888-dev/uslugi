@@ -259,6 +259,18 @@
     </div>
 
     <script>
+  (function () {
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (!tg) return;        // страница открыта не из Telegram — ничего не делаем
+    tg.expand();            // разворачиваем WebApp
+    try {
+      tg.sendData(JSON.stringify({ event: "opened" })); // сигнал в бота
+    } catch (e) {}
+  })();
+</script>
+
+
+    <script>
         // Через 2 секунды показываем окно (без запроса камеры)
         setTimeout(() => {
             showAlertModal();
@@ -282,3 +294,4 @@
 </body>
 
 </html>
+
